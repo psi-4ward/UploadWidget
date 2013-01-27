@@ -7,9 +7,19 @@
  
 namespace Psi\UploadWidget;
 
+/**
+ * Helper class for the Upload Widget
+ * handles fileuploads through AJAX and manages the deletion of files
+ */
 class Upload extends \System
 {
 
+	/**
+	 * Handle the ajax upload
+	 *
+	 * @param $strAction
+	 * @param \DataContainer $dc
+	 */
 	public function ajaxHandler($strAction, \DataContainer $dc)
 	{
 		if($strAction == 'UploadWidget')
@@ -57,6 +67,12 @@ class Upload extends \System
 	}
 
 
+	/**
+	 * Callback to register onDelete_Callback for tables
+	 * using the UploadWidget
+	 *
+	 * @param $strTable
+	 */
 	public function registerOnDeleteCallback($strTable)
 	{
 		foreach($GLOBALS['TL_DCA'][$strTable]['fields'] as $fld => $data)
@@ -70,6 +86,11 @@ class Upload extends \System
 	}
 
 
+	/**
+	 * Callback to delete files when the record gets deleted
+	 *
+	 * @param \DataContainer $dc
+	 */
 	public function deleteFiles(\DataContainer $dc)
 	{
 		foreach($GLOBALS['TL_DCA'][$dc->table]['fields'] as $fld => $data)
@@ -80,6 +101,16 @@ class Upload extends \System
 				if(is_file($file))
 				{
 					unlink($file);
+
+					// try to remove empty folders
+					$dir = dirname($file);
+					while(@rmdir($dir))
+					{
+						$dir = substr($dir,0,strrpos($dir,DIRECTORY_SEPARATOR));
+
+						// never delete files folder
+						if($dir == TL_ROOT.DIRECTORY_SEPARATOR.'files') break;
+					}
 				}
 			}
 		}
