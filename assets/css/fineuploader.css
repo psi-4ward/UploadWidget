@@ -179,3 +179,15 @@
     margin-bottom: 3px;
     display: none;
 }
+
+.UploadWidget .files .image_container {
+    position: relative;
+    display: inline;
+}
+.UploadWidget .files .image_container a img
+{
+    position: absolute;
+    right: 2px;
+    bottom: 2px;
+}
+

@@ -43,5 +43,45 @@ class Upload extends \System
 			header("Content-Type: text/plain");
 			echo json_encode($result);
 		}
+
+		if($strAction == 'UploadWidget_delete')
+		{
+			$file = \Input::post('file');
+			if(substr($file,0,10) == 'system'.DIRECTORY_SEPARATOR.'tmp' && is_file(TL_ROOT.DIRECTORY_SEPARATOR.$file))
+			{
+				unlink(TL_ROOT.DIRECTORY_SEPARATOR.$file);
+			}
+
+			// files from files/ directory are deleted through the DCA
+		}
+	}
+
+
+	public function registerOnDeleteCallback($strTable)
+	{
+		foreach($GLOBALS['TL_DCA'][$strTable]['fields'] as $fld => $data)
+		{
+			if($data['inputType'] == 'UploadWidget')
+			{
+				$GLOBALS['TL_DCA'][$strTable]['config']['ondelete_callback'][] = array('Psi\UploadWidget\Upload', 'deleteFiles');
+				return;
+			}
+		}
+	}
+
+
+	public function deleteFiles(\DataContainer $dc)
+	{
+		foreach($GLOBALS['TL_DCA'][$dc->table]['fields'] as $fld => $data)
+		{
+			if($data['inputType'] == 'UploadWidget' && !$data['eval']['doNotDelete'])
+			{
+				$file = TL_ROOT.DIRECTORY_SEPARATOR.$dc->activeRecord->{$fld};
+				if(is_file($file))
+				{
+					unlink($file);
+				}
+			}
+		}
 	}
 }

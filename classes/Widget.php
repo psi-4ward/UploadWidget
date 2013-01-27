@@ -62,6 +62,13 @@ class Widget extends \Widget
 	public function validate()
 	{
 		$varValue = deserialize($this->getPost($this->strName));
+		$this->varValue = $varValue;
+
+		// delete old file
+		if($this->activeRecord->{$this->strField} != $varValue && is_file(TL_ROOT.DIRECTORY_SEPARATOR.$this->activeRecord->{$this->strField}))
+		{
+			unlink(TL_ROOT.DIRECTORY_SEPARATOR.$this->activeRecord->{$this->strField});
+		}
 
 		// run contaos validator
 		if(!parent::validator($varValue))
