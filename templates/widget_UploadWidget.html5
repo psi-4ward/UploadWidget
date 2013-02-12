@@ -10,7 +10,7 @@
 			<?php endif; ?>
 		</div>
 	</div>
-	<?php echo $this->errors; ?>
+	<?php if($this->errors):?><label class="error"><?php echo $this->errors; ?></label><?php endif; ?>
 </div>
 
 <script type="text/javascript">
