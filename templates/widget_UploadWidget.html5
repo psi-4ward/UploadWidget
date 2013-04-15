@@ -19,7 +19,7 @@ window.addEvent('load',function()
 	var widgetContainer = document.id('UploadWidget_<?php echo $this->fld; ?>');
 
 	widgetContainer.getElement('.files').addEvent('click:relay(a)',function(ev, el){
-		new Event(ev).stop();
+		ev.stop();
 		new Request.Contao({
 			onSuccess: function(txt, json)
 			{
