@@ -107,8 +107,14 @@ class Widget extends \Widget
 			$path .= DIRECTORY_SEPARATOR;
 		}
 
-		// support current id in path
-		$path = str_replace('{{id}}', $this->activeRecord->id, $path);
+		// support placeholders
+		if(preg_match_all("~\{\{([a-z-9]+)\}\}~i", $path, $erg))
+		{
+			foreach(array_unique($erg[1]) as $fld)
+			{
+				$path = str_replace('{{'.$fld.'}}', $this->activeRecord->$fld, $path);
+			}
+		}
 
 		// create path if it doesnt exists
 		if(!is_dir(TL_ROOT.DIRECTORY_SEPARATOR.$path))
