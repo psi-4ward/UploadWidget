@@ -42,8 +42,18 @@ class Upload extends \System
 
 			// Call handleUpload() with the name of the folder, relative to PHP's getcwd()
 			$result = $objUploader->handleUpload(TL_ROOT.DIRECTORY_SEPARATOR.$targetTmpDir);
+			$uploadName = $targetTmpDir.DIRECTORY_SEPARATOR.$objUploader->getUploadName();
 
-			$result['uploadName'] = $targetTmpDir.DIRECTORY_SEPARATOR.$objUploader->getUploadName();
+			// rewrite filename to md5-hash if md5AsFilename option is set
+			if($GLOBALS['TL_DCA'][$dc->table]['fields'][\Input::post('fld')]['eval']['md5AsFilename'])
+			{
+				$md5 = md5_file(TL_ROOT.DIRECTORY_SEPARATOR.$uploadName);
+				$newFileName = $targetTmpDir.DIRECTORY_SEPARATOR.$md5.substr($uploadName,strrpos($uploadName,'.'));
+				rename(TL_ROOT.DIRECTORY_SEPARATOR.$uploadName, TL_ROOT.DIRECTORY_SEPARATOR.$newFileName);
+				$uploadName = $newFileName;
+			}
+
+			$result['uploadName'] = $uploadName;
 
 			if(in_array(substr($result['uploadName'],-3),array('jpg','jpeg','png','gif')))
 			{
