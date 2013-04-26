@@ -137,6 +137,10 @@ class Widget extends \Widget
 		}
 
 		rename(TL_ROOT.DIRECTORY_SEPARATOR.$varValue, $targetFile);
+
+		// remove temp file directory
+		rmdir(substr(TL_ROOT.DIRECTORY_SEPARATOR.$varValue,0,strrpos(TL_ROOT.DIRECTORY_SEPARATOR.$varValue,'/')));
+
 		$this->varValue = $path.$filename;
 	}
 }
