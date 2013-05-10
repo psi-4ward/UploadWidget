@@ -31,11 +31,11 @@ class Widget extends \Widget
 
 		$tpl = new \BackendTemplate('widget_UploadWidget');
 		$tpl->id = $this->activeRecord->id;
+		$tpl->label = $this->strLabel;
 		$tpl->fld = $this->id;
 		$tpl->tbl = $this->strTable;
 		$tpl->value = $this->varValue;
 		$tpl->errors = $this->getErrorAsHTML();
-
 
 		return $tpl->parse();
 	}

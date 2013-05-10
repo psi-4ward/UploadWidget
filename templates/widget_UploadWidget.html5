@@ -1,12 +1,12 @@
 <div class="UploadWidget" id="UploadWidget_<?php echo $this->fld; ?>">
-	<h3>Stimmungsbild</h3>
+	<h3><?php echo $this->label; ?></h3>
 	<input type="hidden" name="<?php echo $this->fld; ?>" value="<?php echo $this->value; ?>">
 	<div class="widget_container">You need Javascript to upload files!</div>
 	<div class=files>
 		<div class="image_container">
 			<?php if($this->value): ?>
 			<img src="<?php echo \Image::get($this->value,100,100);?>" alt="">
-			<a href="#"><?php echo \Image::getHtml('delete.gif','Datei löschen','title="Detei löschen"'); ?></a>
+			<a href="#"><?php echo \Image::getHtml('delete.gif','Datei löschen','title="Datei löschen"'); ?></a>
 			<?php endif; ?>
 		</div>
 	</div>
