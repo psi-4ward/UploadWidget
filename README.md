@@ -53,6 +53,10 @@ Just copy all files in `system/modules/UploadWidget`
     	<th align="left">overwrite</th>
         <td>boolean, default: <i>false</i>. Set to <i>true</i> to overwrite existing files with the same name</td>
     </tr>
+    <tr>
+    	<th align="left">md5AsFilename</th>
+        <td>boolean, default: <i>false</i>. Set to <i>true</i> to rename the file to its md5 hash</td>
+    </tr>
 
 </table>
 
