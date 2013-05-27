@@ -12,6 +12,7 @@ Features
 * Uploaded file gets stored not before the user presses the `save` or `save and close` button
 
 **Planed features**
+
 * upload of multiple files
 * sync with DB-FS
 * cascade deleting of files when the related database-row gets deleted
@@ -56,6 +57,10 @@ Just copy all files in `system/modules/UploadWidget`
     <tr>
     	<th align="left">md5AsFilename</th>
         <td>boolean, default: <i>false</i>. Set to <i>true</i> to rename the file to its md5 hash</td>
+    </tr>
+    <tr>
+    	<th align="left">exactSize</th>
+        <td>array(intWidth, intHeight). Validates the image for the exact size.</td>
     </tr>
 
 </table>

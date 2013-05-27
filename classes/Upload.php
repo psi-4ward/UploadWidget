@@ -24,6 +24,8 @@ class Upload extends \System
 	{
 		if($strAction == 'UploadWidget')
 		{
+			header("Content-Type: text/plain");
+
 			$objUploader = new qqFileUploader();
 
 			// if theres a field we could use the DCA attributes
@@ -44,6 +46,19 @@ class Upload extends \System
 			$result = $objUploader->handleUpload(TL_ROOT.DIRECTORY_SEPARATOR.$targetTmpDir);
 			$uploadName = $targetTmpDir.DIRECTORY_SEPARATOR.$objUploader->getUploadName();
 
+			// some more validation
+			if(\Input::post('fld'))
+			{
+				$err = $this->getValidationErrors($GLOBALS['TL_DCA'][$dc->table]['fields'][\Input::post('fld')]['eval'], $uploadName);
+				if($err)
+				{
+					echo json_encode(array('error'=>$err));
+					unlink(TL_ROOT.DIRECTORY_SEPARATOR.$uploadName);
+					return;
+				}
+			}
+
+
 			// rewrite filename to md5-hash if md5AsFilename option is set
 			if($GLOBALS['TL_DCA'][$dc->table]['fields'][\Input::post('fld')]['eval']['md5AsFilename'])
 			{
@@ -60,9 +75,9 @@ class Upload extends \System
 				$result['img'] = '<img src="'.\Image::get($result['uploadName'],100,100).'" alt="">';
 			}
 
-			header("Content-Type: text/plain");
 			echo json_encode($result);
 		}
+
 
 		if($strAction == 'UploadWidget_delete')
 		{
@@ -74,6 +89,32 @@ class Upload extends \System
 
 			// files from files/ directory are deleted through the DCA
 		}
+	}
+
+
+	/**
+	 * Validate the $file against the eval-array
+	 * returns a string with an error message or false if the validation passes
+	 *
+	 * @param $arrEval
+	 * @param $file
+	 * @return bool|string
+	 */
+	protected function getValidationErrors($arrEval, $file)
+	{
+		if($arrEval['exactSize'])
+		{
+			$imgSize = getimagesize(TL_ROOT.DIRECTORY_SEPARATOR.$file);
+			if($imgSize === false)
+			{
+				return 'Uploaded file is not a valid image.';
+			}
+			if($imgSize[0] != $arrEval['exactSize'][0] || $imgSize[1] != $arrEval['exactSize'][1])
+			{
+				return 'The image has not the expected size of '.$arrEval['exactSize'][0].'x'.$arrEval['exactSize'][1].'px.';
+			}
+		}
+		return false;
 	}
 
 
