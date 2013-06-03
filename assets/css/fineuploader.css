@@ -182,7 +182,13 @@
 
 .UploadWidget .files .image_container {
     position: relative;
-    display: inline;
+    display: inline-block;
+}
+.UploadWidget .files .image_container div {
+	font-weight: bold;
+	color: #fff;
+	padding: 5px 25px 5px 5px;
+	background-color: #8ab858;
 }
 .UploadWidget .files .image_container a img
 {

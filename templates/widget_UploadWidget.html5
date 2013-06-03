@@ -5,8 +5,18 @@
 	<div class=files>
 		<div class="image_container">
 			<?php if($this->value): ?>
-			<img src="<?php echo \Image::get($this->value,100,100);?>" alt="">
-			<a href="#"><?php echo \Image::getHtml('delete.gif','Datei löschen','title="Datei löschen"'); ?></a>
+				<?php if(in_array(substr($this->value,strrpos($this->value,'.')+1), array('png','jpg','jpeg','gif'))): ?>
+					<img src="<?php echo \Image::get($this->value,100,100);?>" alt="">
+				<?php else: ?>
+					<div>
+						<?php if($this->md5AsFilename): ?>
+							<?php echo strtoupper(substr($this->value,strrpos($this->value,'.')+1)); ?> File
+						<?php else: ?>
+							<?php echo $this->value; ?>
+						<?php endif; ?>
+					</div>
+				<?php endif ;?>
+				<a href="#"><?php echo \Image::getHtml('delete.gif','Datei löschen','title="Datei löschen"'); ?></a>
 			<?php endif; ?>
 		</div>
 	</div>

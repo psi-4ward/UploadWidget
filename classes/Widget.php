@@ -36,6 +36,8 @@ class Widget extends \Widget
 		$tpl->tbl = $this->strTable;
 		$tpl->value = $this->varValue;
 		$tpl->errors = $this->getErrorAsHTML();
+		$tpl->md5AsFilename = $GLOBALS['TL_DCA'][$this->strTable]['fields'][$this->id]['eval']['md5AsFilename'];
+
 
 		return $tpl->parse();
 	}
