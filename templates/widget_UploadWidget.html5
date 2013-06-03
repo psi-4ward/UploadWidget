@@ -1,5 +1,5 @@
 <div class="UploadWidget" id="UploadWidget_<?php echo $this->fld; ?>">
-	<h3><?php echo $this->label; ?></h3>
+	<h3><label><?php echo $this->label; ?></label></h3>
 	<input type="hidden" name="<?php echo $this->fld; ?>" value="<?php echo $this->value; ?>">
 	<div class="widget_container">You need Javascript to upload files!</div>
 	<div class=files>
