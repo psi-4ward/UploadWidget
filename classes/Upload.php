@@ -47,7 +47,7 @@ class Upload extends \System
 			$uploadName = $targetTmpDir.DIRECTORY_SEPARATOR.$objUploader->getUploadName();
 
 			// some more validation
-			if(\Input::post('fld'))
+			if(\Input::post('fld') && !$result['error'])
 			{
 				$err = $this->getValidationErrors($GLOBALS['TL_DCA'][$dc->table]['fields'][\Input::post('fld')]['eval'], $uploadName);
 				if($err)
@@ -60,7 +60,7 @@ class Upload extends \System
 
 
 			// rewrite filename to md5-hash if md5AsFilename option is set
-			if($GLOBALS['TL_DCA'][$dc->table]['fields'][\Input::post('fld')]['eval']['md5AsFilename'])
+			if($GLOBALS['TL_DCA'][$dc->table]['fields'][\Input::post('fld')]['eval']['md5AsFilename'] && !$result['error'])
 			{
 				$md5 = md5_file(TL_ROOT.DIRECTORY_SEPARATOR.$uploadName);
 				$newFileName = $targetTmpDir.DIRECTORY_SEPARATOR.$md5.substr($uploadName,strrpos($uploadName,'.'));
@@ -70,7 +70,7 @@ class Upload extends \System
 
 			$result['uploadName'] = $uploadName;
 
-			if(in_array(substr($result['uploadName'],-3),array('jpg','jpeg','png','gif')))
+			if(in_array(substr($result['uploadName'],-3),array('jpg','jpeg','png','gif')) &&  !$result['error'])
 			{
 				$result['img'] = '<img src="'.\Image::get($result['uploadName'],100,100).'" alt="">';
 			}
@@ -126,6 +126,7 @@ class Upload extends \System
 	 */
 	public function registerOnDeleteCallback($strTable)
 	{
+		if(!is_array($GLOBALS['TL_DCA'][$strTable]['fields'])) return;
 		foreach($GLOBALS['TL_DCA'][$strTable]['fields'] as $fld => $data)
 		{
 			if($data['inputType'] == 'UploadWidget')
