@@ -1272,6 +1272,7 @@ qq.UploadHandlerXhr = function(o, uploadCompleteCallback, logCallback) {
         }
         catch(error) {
             log('Error when attempting to parse xhr response text (' + error + ')', 'error');
+	        log(response);
             response = {};
         }
 

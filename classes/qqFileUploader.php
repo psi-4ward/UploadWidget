@@ -55,7 +55,7 @@ class qqFileUploader {
         if ($this->toBytes(ini_get('post_max_size')) < $this->sizeLimit ||
             $this->toBytes(ini_get('upload_max_filesize')) < $this->sizeLimit){
             $size = max(1, $this->sizeLimit / 1024 / 1024) . 'M';
-            return array('error'=>"Server error. Die Datei überschreitet die maximale Größe von ".$size.".");
+            return array('error'=>sprintf($GLOBALS['TL_LANG']['UploadWidget']['maxSizeError'], $size));
         }
 
         if (!is_writable($uploadDirectory) || !is_executable($uploadDirectory)){
@@ -63,7 +63,7 @@ class qqFileUploader {
         }
 
         if(!isset($_SERVER['CONTENT_TYPE'])) {
-            return array('error' => "No files were uploaded.");
+            return array('error' => $GLOBALS['TL_LANG']['UploadWidget']['noFiles']);
         } else if (strpos(strtolower($_SERVER['CONTENT_TYPE']), 'multipart/') !== 0){
             return array('error' => "Server error. Not a multipart request. Please set forceMultipart to default value (true).");
         }
@@ -86,11 +86,11 @@ class qqFileUploader {
         // Validate file size
 
         if ($size == 0){
-            return array('error' => 'File is empty.');
+            return array('error' => $GLOBALS['TL_LANG']['UploadWidget']['emptyFile']);
         }
 
         if ($size > $this->sizeLimit){
-            return array('error' => 'File is too large.');
+            return array('error' => $GLOBALS['TL_LANG']['UploadWidget']['fileToLarge']);
         }
 
         // Validate file extension
@@ -100,7 +100,7 @@ class qqFileUploader {
 
         if($this->allowedExtensions && !in_array(strtolower($ext), array_map("strtolower", $this->allowedExtensions))){
             $these = implode(', ', $this->allowedExtensions);
-            return array('error' => 'Der Dateityp ist nicht erlaubt. Bitte benutzen Sie einen der folgenden: '. $these . '.');
+            return array('error' => sprintf($GLOBALS['TL_LANG']['UploadWidget']['typeError'], $these));
         }
 
         // Save a chunk

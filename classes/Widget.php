@@ -29,6 +29,8 @@ class Widget extends \Widget
 		$GLOBALS['TL_JAVASCRIPT']['fineuploader'] = 'system/modules/UploadWidget/assets/js/fineuploader_src.js';
 		$GLOBALS['TL_CSS']['fineuploader'] = 'system/modules/UploadWidget/assets/css/fineuploader.css';
 
+		$this->loadLanguageFile('UploadWidget');
+
 		$tpl = new \BackendTemplate('widget_UploadWidget');
 		$tpl->id = $this->activeRecord->id;
 		$tpl->label = $this->strLabel;
@@ -93,7 +95,7 @@ class Widget extends \Widget
 		// check if the file exists
 		if(!is_file(TL_ROOT.DIRECTORY_SEPARATOR.$varValue))
 		{
-			$this->addError('File not found!');
+			$this->addError($GLOBALS['TL_LANG']['UploadWidget']['fileNotFound']);
 			return false;
 		}
 

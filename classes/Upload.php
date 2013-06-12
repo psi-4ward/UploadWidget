@@ -26,6 +26,8 @@ class Upload extends \System
 		{
 			header("Content-Type: text/plain");
 
+			$this->loadLanguageFile('UploadWidget');
+
 			$objUploader = new qqFileUploader();
 
 			// if theres a field we could use the DCA attributes
@@ -107,11 +109,11 @@ class Upload extends \System
 			$imgSize = getimagesize(TL_ROOT.DIRECTORY_SEPARATOR.$file);
 			if($imgSize === false)
 			{
-				return 'Uploaded file is not a valid image.';
+				return $GLOBALS['TL_LANG']['UploadWidget']['notAnImage'];
 			}
 			if($imgSize[0] != $arrEval['exactSize'][0] || $imgSize[1] != $arrEval['exactSize'][1])
 			{
-				return 'The image has not the expected size of '.$arrEval['exactSize'][0].'x'.$arrEval['exactSize'][1].'px.';
+				return sprintf($GLOBALS['TL_LANG']['UploadWidget']['notExpectedSize'], $arrEval['exactSize'][0],$arrEval['exactSize'][1]);
 			}
 		}
 		return false;

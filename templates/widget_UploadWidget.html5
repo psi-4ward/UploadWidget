@@ -1,7 +1,7 @@
 <div class="UploadWidget" id="UploadWidget_<?php echo $this->fld; ?>">
 	<h3><label><?php echo $this->label; ?></label></h3>
 	<input type="hidden" name="<?php echo $this->fld; ?>" value="<?php echo $this->value; ?>">
-	<div class="widget_container">You need Javascript to upload files!</div>
+	<div class="widget_container"><?php echo $GLOBALS['TL_LANG']['UploadWidget']['noJsErr']; ?></div>
 	<div class=files>
 		<div class="image_container"<?php if(!$this->value): ?> style="display: inline"<?php endif; ?>>
 			<?php if($this->value): ?>
@@ -78,10 +78,10 @@ window.addEvent('load',function()
 		},
 		text:
 		{
-        	uploadButton: 'Neue Datei hochladen',
-			dragZone: 'Ziehen Sie hier Ihre Datei herein',
-			dropProcessing: 'Uploading...',
-			waitingForResponse: 'Uploading...'
+        	uploadButton: '<?php echo $GLOBALS['TL_LANG']['UploadWidget']['uploadButton']; ?>',
+			dragZone: '<?php echo $GLOBALS['TL_LANG']['UploadWidget']['dragZone']; ?>',
+			dropProcessing: '<?php echo $GLOBALS['TL_LANG']['UploadWidget']['dropProcessing']; ?>',
+			waitingForResponse: '<?php echo $GLOBALS['TL_LANG']['UploadWidget']['waitingForResponse']; ?>'
         },
 		failedUploadTextDisplay:
 		{
