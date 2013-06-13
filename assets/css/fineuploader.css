@@ -8,6 +8,9 @@
     position: relative;
     width: 100%;
 }
+.qq-upload-delete {
+	display: none;
+}
 .qq-upload-button {
     display: inline-block;
 	margin: 5px 0 5px 0;
