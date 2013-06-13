@@ -24,7 +24,10 @@ class Upload extends \System
 	{
 		if($strAction == 'UploadWidget')
 		{
-			header("Content-Type: text/plain");
+			if(in_array('text/plain', (array)$_SERVER["HTTP_ACCEPT"]))
+			{
+				header("Content-Type: text/plain");
+			}
 
 			$this->loadLanguageFile('UploadWidget');
 
@@ -74,7 +77,7 @@ class Upload extends \System
 
 			if(in_array(substr($result['uploadName'],-3),array('jpg','jpeg','png','gif')) &&  !$result['error'])
 			{
-				$result['img'] = '<img src="'.\Image::get($result['uploadName'],100,100).'" alt="">';
+				$result['img'] = \Image::get($result['uploadName'],100,100);
 			}
 
 			echo json_encode($result);

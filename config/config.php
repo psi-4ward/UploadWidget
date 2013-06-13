@@ -11,3 +11,9 @@ $GLOBALS['TL_HOOKS']['executePostActions'][] = array('Psi\UploadWidget\Upload', 
 
 // register onDelete callbacks to cascade unlink of files
 $GLOBALS['TL_HOOKS']['loadDataContainer'][] = array('Psi\UploadWidget\Upload', 'registerOnDeleteCallback');
+
+// Hack for IE8 iframe upload without ajax
+if($_REQUEST['isAjax'] == '1')
+{
+	$_SERVER['HTTP_X_REQUESTED_WITH'] = 'XMLHttpRequest';
+}

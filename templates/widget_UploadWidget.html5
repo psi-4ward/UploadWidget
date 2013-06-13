@@ -59,7 +59,8 @@ window.addEvent('load',function()
 				'REQUEST_TOKEN': Contao.request_token,
 				'fld': '<?php echo $this->fld; ?>',
 				'tbl': '<?php echo $this->tbl; ?>',
-				'id': '<?php echo $this->id; ?>'
+				'id': '<?php echo $this->id; ?>',
+				'isAjax': '1'
 			}
 		},
 		callbacks:
@@ -72,7 +73,7 @@ window.addEvent('load',function()
 				}
 				if(response.img)
 				{
-					widgetContainer.getElement('.image_container').set('html', response.img+'<a href="#"><?php echo \Image::getHtml('delete.gif','Datei löschen'); ?></a>');
+					widgetContainer.getElement('.image_container').set('html', '<img src="'+response.img+'" alt="">' + '<a href="#"><?php echo \Image::getHtml('delete.gif','Datei löschen'); ?></a>');
 				}
 	        }
 		},
@@ -87,6 +88,9 @@ window.addEvent('load',function()
 		{
 			mode: 'custom',
 			maxChars: 300
+		},
+		deleteFile: {
+			enabled: false
 		},
 		multiple: false,
 		debug:true
