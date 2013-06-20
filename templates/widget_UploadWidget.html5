@@ -16,7 +16,8 @@
 						<?php endif; ?>
 					</div>
 				<?php endif ;?>
-				<a href="#"><?php echo \Image::getHtml('delete.gif','Datei löschen','title="Datei löschen"'); ?></a>
+				<a href="<?php echo $this->value;?>" target="_blank" class="downbtn"><?php echo \Image::getHtml('down.gif',$GLOBALS['TL_LANG']['UploadWidget']['downbtn'],'title="'.$GLOBALS['TL_LANG']['UploadWidget']['downbtn'].'"'); ?></a>
+				<a href="#" class="delbtn"><?php echo \Image::getHtml('delete.gif',$GLOBALS['TL_LANG']['UploadWidget']['delbtn'],'title="'.$GLOBALS['TL_LANG']['UploadWidget']['delbtn'].'"'); ?></a>
 			<?php endif; ?>
 		</div>
 	</div>
@@ -29,6 +30,7 @@ window.addEvent('load',function()
 	var widgetContainer = document.id('UploadWidget_<?php echo $this->fld; ?>');
 
 	widgetContainer.getElement('.files').addEvent('click:relay(a)',function(ev, el){
+		if(!el.hasClass('delbtn')) return;
 		ev.stop();
 		new Request.Contao({
 			onSuccess: function(txt, json)

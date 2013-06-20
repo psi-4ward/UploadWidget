@@ -19,3 +19,6 @@ $GLOBALS['TL_LANG']['UploadWidget']['noFiles'] = 'No files were uploaded.';
 $GLOBALS['TL_LANG']['UploadWidget']['emptyFile'] = 'File is empty.';
 $GLOBALS['TL_LANG']['UploadWidget']['fileToLarge'] = 'File is too large.';
 $GLOBALS['TL_LANG']['UploadWidget']['typeError'] = 'The filetype is not allowed. Please use one of the following: %s.';
+
+$GLOBALS['TL_LANG']['UploadWidget']['downbtn'] = 'show/download the file';
+$GLOBALS['TL_LANG']['UploadWidget']['delbtn'] = 'delete the file';
