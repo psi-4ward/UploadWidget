@@ -127,8 +127,8 @@ class Widget extends \Widget
 		}
 
 		$filename = substr($varValue,strrpos($varValue,DIRECTORY_SEPARATOR)+1);
-		$targetFile = TL_ROOT.DIRECTORY_SEPARATOR.$path.$filename;
-		if(!$this->overwrite && is_file($targetFile))
+		$targetFile = $path.$filename;
+		if(!$this->overwrite && is_file(TL_ROOT.DIRECTORY_SEPARATOR.$targetFile))
 		{
 			// alter the filename if theres an existing file with the same name
 			$f = substr($targetFile,0,strrpos($targetFile,'.'));
@@ -137,14 +137,14 @@ class Widget extends \Widget
 			do {
 				$i++;
 				$targetFile = $f.'_'.$i.'.'.$ext;
-			} while(is_file($targetFile));
+			} while(is_file( TL_ROOT.DIRECTORY_SEPARATOR.$targetFile));
 		}
 
-		rename(TL_ROOT.DIRECTORY_SEPARATOR.$varValue, $targetFile);
+		rename(TL_ROOT.DIRECTORY_SEPARATOR.$varValue, TL_ROOT.DIRECTORY_SEPARATOR.$targetFile);
 
 		// remove temp file directory
 		rmdir(substr(TL_ROOT.DIRECTORY_SEPARATOR.$varValue,0,strrpos(TL_ROOT.DIRECTORY_SEPARATOR.$varValue,'/')));
 
-		$this->varValue = $path.$filename;
+		$this->varValue = $targetFile;
 	}
 }
