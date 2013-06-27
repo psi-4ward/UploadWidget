@@ -31,6 +31,13 @@ class Widget extends \Widget
 
 		$this->loadLanguageFile('UploadWidget');
 
+		// check if the file exists
+		if($this->varValue && !is_file(TL_ROOT.DIRECTORY_SEPARATOR. $this->varValue))
+		{
+			\System::log("UploadWidget [{$this->strTable}.{$this->id} ID:{$this->activeRecord->id}] could not find file {$this->varValue}", 'UploadWidget::generate()', 'ERROR');
+			$this->varValue = '';
+		}
+
 		$tpl = new \BackendTemplate('widget_UploadWidget');
 		$tpl->id = $this->activeRecord->id;
 		$tpl->label = $this->strLabel;
@@ -146,5 +153,7 @@ class Widget extends \Widget
 		rmdir(substr(TL_ROOT.DIRECTORY_SEPARATOR.$varValue,0,strrpos(TL_ROOT.DIRECTORY_SEPARATOR.$varValue,'/')));
 
 		$this->varValue = $targetFile;
+
+		return true;
 	}
 }
