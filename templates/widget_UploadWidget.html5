@@ -17,7 +17,7 @@
 					</div>
 				<?php endif ;?>
 				<a href="<?php echo $this->value;?>" target="_blank" class="downbtn"><?php echo \Image::getHtml('down.gif',$GLOBALS['TL_LANG']['UploadWidget']['downbtn'],'title="'.$GLOBALS['TL_LANG']['UploadWidget']['downbtn'].'"'); ?></a>
-				<a href="#" class="delbtn"><?php echo \Image::getHtml('delete.gif',$GLOBALS['TL_LANG']['UploadWidget']['delbtn'],'title="'.$GLOBALS['TL_LANG']['UploadWidget']['delbtn'].'"'); ?></a>
+				<a href="<?php echo \Environment::get('request'); ?>#" onclick="return false;" class="delbtn"><?php echo \Image::getHtml('delete.gif',$GLOBALS['TL_LANG']['UploadWidget']['delbtn'],'title="'.$GLOBALS['TL_LANG']['UploadWidget']['delbtn'].'"'); ?></a>
 			<?php endif; ?>
 		</div>
 	</div>
@@ -75,7 +75,7 @@ window.addEvent('load',function()
 				}
 				if(response.img)
 				{
-					widgetContainer.getElement('.image_container').set('html', '<img src="'+response.img+'" alt="">' + '<a href="#"><?php echo \Image::getHtml('delete.gif','Datei löschen'); ?></a>');
+					widgetContainer.getElement('.image_container').set('html', '<img src="'+response.img+'" alt="">' + '<a href="<?php echo \Environment::get('request'); ?>#" onclick="return false;" class="delbtn"><?php echo \Image::getHtml('delete.gif','Datei löschen'); ?></a>');
 				}
 	        }
 		},
