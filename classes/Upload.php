@@ -75,7 +75,7 @@ class Upload extends \System
 
 			$result['uploadName'] = $uploadName;
 
-			if(in_array(substr($result['uploadName'],-3),array('jpg','jpeg','png','gif')) &&  !$result['error'])
+			if(in_array(strtolower(substr($result['uploadName'], strrpos($result['uploadName'], '.') + 1)), array('jpg','jpeg','png','gif')) &&  !$result['error'])
 			{
 				$result['img'] = \Image::get($result['uploadName'],100,100);
 			}

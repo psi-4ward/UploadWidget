@@ -5,7 +5,7 @@
 	<div class=files>
 		<div class="image_container"<?php if(!$this->value): ?> style="display: inline"<?php endif; ?>>
 			<?php if($this->value): ?>
-				<?php if(in_array(substr($this->value,strrpos($this->value,'.')+1), array('png','jpg','jpeg','gif'))): ?>
+				<?php if(in_array(strtolower(substr($this->value,strrpos($this->value,'.')+1)), array('png','jpg','jpeg','gif'))): ?>
 					<img src="<?php echo \Image::get($this->value,100,100);?>" alt="">
 				<?php else: ?>
 					<div>
